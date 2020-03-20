@@ -1,2 +1,6 @@
 node_modules
 .env
+ecosystem.config.js
+current
+shared
+source
