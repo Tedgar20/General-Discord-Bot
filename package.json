@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start" : "NODE_ENV=production node src/main.js",
+    "start:local": "NODE_ENV=development node -r dotenv/config src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Edgar Chipeta",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "dotenv": "^8.2.0",
     "jslint": "^0.12.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }
