@@ -30,6 +30,7 @@ client.on('message', msg => {
   try {
     cmd.execute(msg, args);
   }catch (error) {
+    console.log(error)
     msg.reply('There was an error with your command')
   }
 });
