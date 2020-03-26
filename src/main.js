@@ -13,9 +13,12 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  common.removeColin(msg)
+  const LISTMENTIONS = msg.mentions.users.map(snowflake => snowflake.id);
+  const AMIBOT = common.isBot(msg.author.id, botID);
 
-  if (msg.content.startsWith("!ping")) {
-    msg.reply('NO! ping you');
+  if( !AMIBOT ){
+    common.removeColin(msg)
+  }if( AMIBOT && LISTMENTIONS.length === 1 ){
+    msg.delete(2000)
   }
 });

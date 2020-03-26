@@ -1,10 +1,10 @@
 const IDs = require('./constantIDs');
-const colinID = IDs.colinID;
+const RESPONSES = require('./deletedReason');
+const COLINID = IDs.colinID;
 
 module.exports = {
     removeColin: function (message) {
         let authorID;
-        let listMentions;
         
         try {
             authorID = message.author.id;
@@ -13,12 +13,31 @@ module.exports = {
             console.log(error)
             return false
         }
-        let listIDs = listMentions.map(snowFlake => snowFlake.id)
 
-        if( authorID !== colinID && listIDs.indexOf(colinID) === -1){
-            return false
-        }     
-        message.delete(2000)
+        if( this.deleteChance(authorID) ) { 
+            message.delete()
+            let response = this.getReason();
+            message.reply(response)
+        }
         return true;
     },
+    deleteChance: function(messageAuth) {
+        if(this.isColin(messageAuth) && this.getRandomInt(2) === 1){
+            return true
+        }
+        return this.getRandomInt(10) === 7;
+    },
+    isColin: function(snowFlake) {
+        return snowFlake === COLINID;
+    },
+    getRandomInt: function(max) {
+        return Math.floor(Math.random() * Math.floor(max))
+    },
+    isBot: function(messageAuth, botId) {
+        return messageAuth === botId
+    },
+    getReason: function() {
+        let responses = RESPONSES.listResponse;
+        return responses[this.getRandomInt(responses.length)]
+    }
 };
