@@ -2,17 +2,20 @@ module.exports = {
     name: 'roll',
     description: 'The $roll command rolls a random from 1-100. Can be supplied a number to change range i.e $roll 20 => 1-20',
     execute(message, args) {
-        if(args[0].startsWith('-help')){
-            message.reply(this.description)
-            return
+        num = -1;
+        response = '';
+        invalidNum = 'Please enter a number between 1 and 1000'
+        
+        if(args.length === 0){
+            num = getRandomNum(100)
+            response = num === undefined ? invalidNum : 'You rolled ' + num
         }
-        num = args[0] ? getRandomNum(args[0]) : getRandomNum(100)
-        response = ''
-
-        if(num !== undefined)
-            response = 'You rolled ' + num
-        else
-            response = 'Please enter a number between 1 and 1000'
+        else if(args[0].startsWith('-help')){
+           response = this.description
+        }else{
+            num = getRandomNum(args[0])
+            response = num === undefined ? invalidNum : 'You rolled ' + num
+        }
 
         message.reply(response)
     }
