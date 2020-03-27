@@ -38,7 +38,6 @@ client.on('message', msg => {
 
   try {
     cmd.execute(msg, args);
-    deleteMessage = false;
   }catch (error) {
     console.log(error)
     msg.reply('There was an error with your command')
