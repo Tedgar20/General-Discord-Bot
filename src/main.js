@@ -1,4 +1,5 @@
 const fs = require('fs');
+const REMOVE = require('./util/chanceRemoval')
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -19,7 +20,15 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if( !msg.content.startsWith(PREFIX) || msg.author.bot ) return;
+  if( !msg.content.startsWith(PREFIX) ) {
+      try {
+        REMOVE.removeMessage(msg)
+      }catch (error) {
+        console.log(error)
+        msg.reply('WHAT!? You managed to avoid deletion')
+      }
+  }
+
   const args = msg.content.slice(PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
 

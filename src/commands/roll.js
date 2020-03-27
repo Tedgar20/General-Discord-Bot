@@ -1,6 +1,6 @@
 module.exports = {
     name: 'roll',
-    description: 'The $roll command rolls a random from 1-100. Can be supplied a number to change range i.e $roll 20 => 1-20',
+    description: 'The $roll command rolls a random number from 1-100. Can be supplied a number to change range i.e $roll 20 => 1-20',
     execute(message, args) {
 
         num = -1;
