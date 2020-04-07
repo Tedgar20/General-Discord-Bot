@@ -4,13 +4,23 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const { TOKEN, PREFIX } = require('../config');
 
-const commandFiles = fs.readdirSync('src/commands').filter(file => file.endsWith('.js'));
 client.commands = new Discord.Collection();
 
-for (const file of commandFiles){
+const generalCommandFiles = fs.readdirSync('src/commands').filter(file => file.endsWith('.js'));
+const musicCommandFiles = fs.readdirSync('src/commands/musicPlayer').filter(file => file.endsWith('.js'));
+
+for (const file of generalCommandFiles){
   const command = require(`./commands/${file}`);
+  console.log(command.name)
   client.commands.set(command.name, command)
 }
+for (const file of musicCommandFiles){
+	const command = require(`./commands/musicPlayer/${file}`);
+	console.log(command.name)
+	client.commands.set(command.name, command)
+  }
+
+let queue = {};
 
 client.login(TOKEN);
 
@@ -19,17 +29,21 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  const args = msg.content.slice(PREFIX.length).split(/ +/);
-  const commandName = args.shift().toLowerCase();
+	bot = msg.author.bot
 
-  if(!client.commands.has(commandName)) return
+	if(!bot){
+		const args = msg.content.slice(PREFIX.length).split(/ +/);
+		const commandName = args.shift().toLowerCase();
 
-  const cmd = client.commands.get(commandName)
+		if(!client.commands.has(commandName)) return
 
-  try {
-    cmd.execute(msg, args);
-  }catch (error) {
-    console.log(error)
-    msg.reply('There was an error with your command')
-  }
+		const cmd = client.commands.get(commandName)
+
+		try {
+			cmd.execute(msg, args, queue);
+		}catch (error) {
+			console.log(error)
+			msg.reply('There was an error with your command')
+		}
+	}
 });
