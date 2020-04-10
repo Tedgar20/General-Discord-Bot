@@ -3,6 +3,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const { TOKEN, PREFIX } = require('../config');
+const dota = require('./util/dotaQuotes')
 
 client.commands = new Discord.Collection();
 
@@ -11,12 +12,10 @@ const musicCommandFiles = fs.readdirSync('src/commands/musicPlayer').filter(file
 
 for (const file of generalCommandFiles){
   const command = require(`./commands/${file}`);
-  console.log(command.name)
   client.commands.set(command.name, command)
 }
 for (const file of musicCommandFiles){
 	const command = require(`./commands/musicPlayer/${file}`);
-	console.log(command.name)
 	client.commands.set(command.name, command)
   }
 
@@ -32,7 +31,10 @@ client.on('message', msg => {
 	bot = msg.author.bot
 
 	if(!bot){
-		const args = msg.content.slice(PREFIX.length).split(/ +/);
+		if( dota.isDotaQuote(msg) ) return
+		const args = msg.content.startsWith(PREFIX) ? 
+			msg.content.slice(PREFIX.length).split(/ +/) :
+			''
 		const commandName = args.shift().toLowerCase();
 
 		if(!client.commands.has(commandName)) return
