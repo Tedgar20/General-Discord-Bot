@@ -32,10 +32,9 @@ client.on('message', msg => {
 
 	if(!bot){
 		if( dota.isDotaQuote(msg) ) return
-		const args = msg.content.startsWith(PREFIX) ? 
-			msg.content.slice(PREFIX.length).split(/ +/) :
-			''
-		const commandName = args.shift().toLowerCase();
+		
+		const args = msg.content.startsWith(PREFIX) ? msg.content.slice(PREFIX.length).split(/ +/) : []
+		const commandName = args.length === 0 ? '' : args.shift().toLowerCase();
 
 		if(!client.commands.has(commandName)) return
 
