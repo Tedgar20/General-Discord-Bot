@@ -3,7 +3,9 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const { TOKEN, PREFIX } = require('../config');
+
 const dota = require('./util/dotaQuotes')
+const scream = require('./util/gachiScream')
 
 client.commands = new Discord.Collection();
 
@@ -47,4 +49,8 @@ client.on('message', msg => {
 			msg.reply('There was an error with your command')
 		}
 	}
+});
+
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+	scream.screamOnEnter(oldMember, newMember)
 });
