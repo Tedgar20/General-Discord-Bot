@@ -4,22 +4,26 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const { TOKEN, PREFIX } = require('../config');
 
-const dota = require('./util/dotaQuotes')
+const dota = require('./util/soundBoard')
 const scream = require('./util/gachiScream')
 
 client.commands = new Discord.Collection();
 
 const generalCommandFiles = fs.readdirSync('src/commands').filter(file => file.endsWith('.js'));
-const musicCommandFiles = fs.readdirSync('src/commands/musicPlayer').filter(file => file.endsWith('.js'));
 
 for (const file of generalCommandFiles){
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command)
 }
+
+// Music commands deprecated for now 
+/*
+const musicCommandFiles = fs.readdirSync('src/commands/musicPlayer').filter(file => file.endsWith('.js'));
 for (const file of musicCommandFiles){
 	const command = require(`./commands/musicPlayer/${file}`);
 	client.commands.set(command.name, command)
-  }
+} 
+*/
 
 let queue = {};
 
@@ -33,7 +37,7 @@ client.on('message', msg => {
 	bot = msg.author.bot
 
 	if(!bot){
-		if( dota.isDotaQuote(msg) ) return
+		if( dota.isSoundClip(msg) ) return
 		
 		const args = msg.content.startsWith(PREFIX) ? msg.content.slice(PREFIX.length).split(/ +/) : []
 		const commandName = args.length === 0 ? '' : args.shift().toLowerCase();

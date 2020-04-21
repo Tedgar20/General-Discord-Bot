@@ -1,5 +1,5 @@
 module.exports = {
     TOKEN: process.env.TOKEN,
     PREFIX: '$',
-    PASSES : 1
+    //PASSES : 1
 }
