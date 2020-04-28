@@ -13,7 +13,7 @@ module.exports = {
             const VOICECHANNEL = newMember.member.voice.channel;
             const MEMBER = newMember.member;
 
-            if(newMember.member.id === userIDs.edgarID || newMember.member.id === userIDs.ericaID){
+            if(newMember.member.id === userIDs.chrisID || newMember.member.id === userIDs.ericaID){
                 streamOptions = { seek: 0, volume: 1 };
                 setTimeout(() => {
                     JOINCHANNEL.join(VOICECHANNEL, MEMBER, gachiLink)

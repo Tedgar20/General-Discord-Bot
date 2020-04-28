@@ -8,5 +8,6 @@ module.exports.soundClips = {
     'lol' : 'https://gamepedia.cursecdn.com/dota2_gamepedia/3/38/Vo_luna_luna_laugh_01.mp3',
     'Its in the bag mate' : 'https://gamepedia.cursecdn.com/dota2_gamepedia/a/a7/Vo_bristleback_bristle_inthebag_01.mp3',
     'From the Ghastly Eyrie' : 'https://gamepedia.cursecdn.com/dota2_gamepedia/d/d5/Vo_skywrath_mage_drag_inthebag_01.mp3',
-    'SCREAM' : 'src/misc/sounds/Scream.mp3'
+    'SCREAM' : 'src/misc/sounds/Scream.mp3',
+    'Look at us' : 'src/misc/sounds/Look_at_us.mp3'
 }
